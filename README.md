@@ -29,6 +29,17 @@ A gradient boosted decision tree model (LightGBM) is trained using patient-level
 
 Rather than relying on a single decision threshold, predicted risk scores are further evaluated through risk stratification to assess potential clinical utility for prioritization and early intervention.
 
+## Key results
+- Global feature importance (SHAP bar):  
+  [`figures/shap_global_bar.png`](figures/shap_global_bar.png)
+
+- Global SHAP distribution (beeswarm):  
+  [`figures/shap_global_beeswarm.png`](figures/shap_global_beeswarm.png)
+
+- Local explanation (highest-risk patient):  
+  [`figures/shap_local_highest_risk.png`](figures/shap_local_highest_risk.png)
+
+
 ## Repository Structure
 - `notebooks/` — full analysis pipeline  
 - `figures/` — key evaluation and interpretability figures  
