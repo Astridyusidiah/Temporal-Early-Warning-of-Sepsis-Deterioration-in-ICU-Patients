@@ -1,51 +1,40 @@
 # Temporal Early Warning of Sepsis Deterioration in ICU Patients
 
 ## Overview
-This project implements a prospective, patient-level early warning system for predicting imminent sepsis deterioration in ICU patients using high-frequency longitudinal clinical data.
+This repository implements a patient-level early warning framework for prospective sepsis risk prediction in ICU settings. The emphasis is placed on temporal validity, prevention of information leakage, and clinically meaningful interpretability rather than retrospective event detection.
 
-Rather than retrospective sepsis detection, the task is formulated as time-dependent risk prediction within a fixed future horizon.
+The implementation is intended as a research-oriented prototype aligned with clinical machine learning constraints, not as a production-ready system.
 
 ## Problem Formulation
 
-At each ICU hour t, the model predicts whether a patient will develop sepsis within the next 6 hours, without using any post-onset information.
+The task is formulated as prospective risk prediction within a fixed future horizon. At each ICU hour, the model estimates the probability of sepsis onset occurring within the next predefined time window, explicitly avoiding retrospective labeling schemes.
 
-Labels are constructed prospectively to reflect a realistic clinical early warning scenario.
-This formulation highlights:
-- Temporal dependency across observations
-- Explicit definition of prediction horizon
-- Avoidance of label leakage common in retrospective setups
+## Data Handling and Temporal Integrity
+All preprocessing preserves strict within-patient temporal ordering. Train–test partitioning is performed at the patient level to prevent leakage across correlated ICU time points.
 
-## Dataset
-- Source: PhysioNet Sepsis Challenge dataset
-- Data type: Multivariate time-series (hourly ICU measurements)
-- Features include vital signs and laboratory values
-- Missingness is handled using simple imputation strategies suitable for baseline modeling
+No feature engineering relies on future observations.
 
-## Methodology
-The analysis pipeline includes:
-- Source: PhysioNet Sepsis Challenge dataset
-- Resolution: Hourly ICU measurements
-- Cohort split: Patient-level train/test separation
+## Early Warning Label Construction
 
-## Modeling Approach
-- Algorithm: LightGBM (gradient-boosted decision trees)
-- Missing data: Median imputation (train-only)
-- Class imbalance: Native LightGBM handling
-- Evaluation: AUROC, PR-AUC, recall-oriented thresholding
+Early warning labels are assigned to observations that fall within a fixed prediction horizon preceding the first recorded sepsis onset for each patient. This formulation reflects a clinically actionable early warning setting rather than post hoc detection.
 
-## Results 
-- AUROC: ~0.65
-- PR-AUC: Low, reflecting extreme outcome imbalance
-- Thresholds chosen to prioritize sensitivity, consistent with early warning objectives
+## Modeling
+
+A gradient-boosted decision tree model (LightGBM) is trained under extreme class imbalance. Model configuration prioritizes stable discrimination and generalization over aggressive optimization.
+
+## Evaluation
+
+Performance is reported using threshold-free metrics (AUROC and PR-AUC) to reflect pre-deployment discrimination under severe outcome imbalance. No operating threshold is tuned or optimized in this study.
 
 ## Interpretability
 
-Global and local explanations are generated using SHAP to identify dominant physiological drivers of short-term sepsis risk.
+Global feature attributions are examined using SHAP to inspect dominant physiological drivers influencing risk estimates.
 
-## Limitations
-- Single-horizon prediction
-- No explicit temporal feature engineering
-- No external validation
+See global feature importance visualization:
+figures/shap_global_bar.png
 
-## Purpose
-This repository is intended as a research-oriented implementation demonstrating correct temporal framing, leakage avoidance, and clinically grounded evaluation for early warning modeling.
+Interpretability analysis is used for model inspection rather than causal inference.
+
+## Notes
+
+This repository prioritizes methodological validity and transparency over metric maximization. Observed performance should be interpreted in the context of the chosen early warning horizon and the intrinsic difficulty of the prediction task.
