@@ -30,8 +30,7 @@ Performance is reported using threshold-free metrics (AUROC and PR-AUC) to refle
 
 Global feature attributions are examined using SHAP to inspect dominant physiological drivers influencing risk estimates.
 
-See global feature importance visualization:
-figures/shap_global_bar.png
+See global feature importance visualization: [figures/shap_global_bar.png](figures/shap_global_bar.png)
 
 Interpretability analysis is used for model inspection rather than causal inference.
 
