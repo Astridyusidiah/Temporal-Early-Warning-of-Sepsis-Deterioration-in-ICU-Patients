@@ -1,10 +1,12 @@
 # Temporal Early Warning of Sepsis Deterioration in ICU Patients
 
 ## Overview
-This repository implements a patient-level early warning framework for prospective sepsis risk prediction in ICU settings. The emphasis is placed on temporal validity, prevention of information leakage, and clinically meaningful interpretability rather than retrospective event detection.
+This repository explores a patient-level early warning framework for prospective sepsis risk prediction in ICU settings.
+The primary focus is on maintaining temporal validity, preventing information leakage, and examining clinically plausible risk drivers, rather than maximizing predictive performance.
 
-The implementation is intended as a research-oriented prototype aligned with clinical machine learning constraints, not as a production-ready system.
+The implementation is designed as a learning-oriented, research-style prototype that follows common constraints in clinical machine learning, including patient-level data separation and horizon-based outcome definition.
 
+This work does not aim to provide a deployable clinical system, but instead serves as a structured exploration of early warning modeling principles in ICU data.
 ## Problem Formulation
 
 The task is formulated as prospective risk prediction within a fixed future horizon. At each ICU hour, the model estimates the probability of sepsis onset occurring within the next predefined time window, explicitly avoiding retrospective labeling schemes.
@@ -32,8 +34,12 @@ Global feature attributions are examined using SHAP to inspect dominant physiolo
 
 See global feature importance visualization: ![Global SHAP bar plot](figures/shap_global_bar.png)
 
+# Notes
+
+This project was developed as part of a learning process to strengthen methodological foundations in clinical machine learning.
+Design choices prioritize correctness, transparency, and interpretability over aggressive optimization or alert threshold tuning.
+
+Model outputs and performance metrics should be interpreted within the context of the chosen prediction horizon and the inherent difficulty of prospective sepsis prediction.
+
 Interpretability analysis is used for model inspection rather than causal inference.
 
-## Notes
-
-This repository prioritizes methodological validity and transparency over metric maximization. Observed performance should be interpreted in the context of the chosen early warning horizon and the intrinsic difficulty of the prediction task.
